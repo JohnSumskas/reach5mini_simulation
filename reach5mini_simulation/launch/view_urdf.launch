@@ -1,0 +1,10 @@
+<launch>
+    <param name ="/use_sim_time" value="false"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find reach5mini_simulation)/urdf/reach5mini.urdf.xacro'" />
+    <param name="use_gui" value="true"/>
+    <node name="joint_state_publisher_simulated" pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="use_gui" value="true"/>
+    </node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find reach5mini_description)/urdf.rviz" />
+</launch>

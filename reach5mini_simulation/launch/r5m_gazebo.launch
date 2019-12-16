@@ -1,0 +1,36 @@
+
+<launch>
+
+  <!-- Paused is required to initalize the joint states -->
+  <arg name="paused" default="true"/>
+  <arg name="gazebo_gui" default="true"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/>
+  </include>
+
+  <!-- startup simulated world -->
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find reach5mini_simulation)/urdf/reach5mini.urdf.xacro'
+    fixed:=true
+    gazebo:=true"/>
+
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model reach5mini
+    -x 0 -y 0 -z 0.26
+    -R 3.14 -P 0 -Y 0
+    -J joint5 2.7
+    -J joint4 0.8
+    -J joint3 0.45"
+    respawn="false" output="screen" />
+
+  <rosparam file="$(find reach5mini_simulation)/config/ros_controllers.yaml" command="load"/>
+
+  <!-- Load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="joint_state_controller arm_controller "/>
+
+
+</launch>

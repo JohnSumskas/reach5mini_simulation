@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot name="reach5mini" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="gazebo" default="false"/>
+  <xacro:include filename="$(find reach5mini_simulation)/urdf/reach5mini.urdf.xacro" />
+  <link name="base_link" >
+    <visual>
+        <geometry>
+            <box size="0.210 0.120 0.240" />
+        </geometry>
+        <origin rpy="0 0 0" xyz="-0.105 0 0.120" />
+    </visual>
+    <collision>
+      <geometry>
+          <box size="0.210 0.120 0.240" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="-0.105 0 0.120" />
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.1</mu>
+            <mu2>0.1</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+    <inertial>
+        <mass value="5" />
+        <origin rpy="0 0 0" xyz="-0.105 0 0.120" />
+        <inertia ixx="0.001" ixy="0.00015" ixz="0.0001054" iyy="0.000213" iyz="0.0001003" izz="0.0001067" />
+    </inertial>
+  </link>
+
+
+  <reach5mini parent="base_link" name="r5m">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </reach5mini>
+</robot>

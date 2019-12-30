@@ -14,16 +14,15 @@
   <!-- startup simulated world -->
 
   <!-- send robot urdf to param server -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find reach5mini_simulation)/urdf/reach5mini.urdf.xacro'
-    fixed:=true
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find reach5mini_simulation)/urdf/test_reach5mini.urdf.xacro'
     gazebo:=true"/>
 
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model reach5mini
     -x 0 -y 0 -z 0.26
     -R 3.14 -P 0 -Y 0
-    -J joint5 2.7
-    -J joint4 0.8
-    -J joint3 0.45"
+    -J r5m_joint5 2.7
+    -J r5m_joint4 0.8
+    -J r5m_joint3 0.45"
     respawn="false" output="screen" />
 
   <rosparam file="$(find reach5mini_simulation)/config/ros_controllers.yaml" command="load"/>
